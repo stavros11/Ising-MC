@@ -1,18 +1,19 @@
 #include <fstream>
 #include <iostream>
 #include <vector>
-#include "ising1d.hpp"
+#include "ising2d.hpp"
 
 int main() {
-  int N, Nsamples, Ncorr, Nburn, n_temperatures;
+  int L, Nsamples, Ncorr, Nburn, n_temperatures;
+  int N;
   float T;
   std::vector<float> Tlist;
-  Ising1D sampler;
+  Ising2D sampler;
   std::ofstream file;
 
   // User gives parameters
-  std::cout << "N = ";
-  std::cin >> N;
+  std::cout << "L = ";
+  std::cin >> L;
   std::cout << "n_temperatures = ";
   std::cin >> n_temperatures;
   for (int i = 0; i < n_temperatures; i++) {
@@ -30,9 +31,10 @@ int main() {
   // Sample
   std::vector<std::vector<std::vector<int>>> data;
   for (int iT = 0; iT < n_temperatures; iT++) {
-    sampler.Init(N, 1.0 / Tlist[iT]);
+    sampler.Init(L, 1.0 / Tlist[iT]);
     data.push_back(sampler.Run(Nsamples, Ncorr, Nburn));
   }
+  N = sampler.Nsites();
 
   // Write samples to file
   file.open("confs.txt");
@@ -48,7 +50,7 @@ int main() {
 
   // Write params to file
   file.open("params.txt");
-  file << "N=" << N << "\n";
+  file << "L=" << L << "\n";
   for (int iT = 0; iT < n_temperatures; iT++) {
     file << "T=" << Tlist[iT] << ", ";
   }
