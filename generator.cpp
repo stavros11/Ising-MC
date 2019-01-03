@@ -1,15 +1,14 @@
 #include <fstream>
 #include <iostream>
 #include <vector>
-#include "ising2d.hpp"
+#include "wolf2d.hpp"
 
 int main() {
   int L, Nsamples, Ncorr, Nburn, n_temperatures;
   int N;
   float T;
   std::vector<float> Tlist;
-  Ising2D sampler;
-  std::ofstream file;
+  Wolff2D sampler;
 
   // User gives parameters
   std::cout << "L = ";
@@ -37,6 +36,7 @@ int main() {
   N = sampler.Nsites();
 
   // Write samples to file
+  std::ofstream file;
   file.open("confs.txt");
   for (std::size_t i = 0; i < data.size(); i++) {
     for (std::size_t j = 0; j < data[i].size(); j++) {
