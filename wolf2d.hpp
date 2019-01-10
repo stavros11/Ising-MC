@@ -1,4 +1,5 @@
 #include <cmath>
+#include <ctime>
 #include <vector>
 
 class Wolff2D {
